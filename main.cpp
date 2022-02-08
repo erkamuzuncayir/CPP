@@ -1,100 +1,60 @@
 #include <iostream>
+#include <cstring>
 
-enum OperationCodes
-{
-    SumOp = 1,
-    SubstractOp = 2,
-    MultiplyOp = 3,
-    DivideOp = 4,
-    ExitOp = 5,
-};
-
-//  declaration of functions
-int sum();
-int substract();
-int multiply();
-int divide();
-void display_operations();
+using namespace std;
 
 int main()
-
 {
-    int choice = 0;
+    char str1[10] = "Ali"; // const char
+    char str2[10] = "Veli";
+    char str3[10];
 
-    while (choice != ExitOp)
+    char *str4;
+
+    //  strcpy
+
+    strcpy(str3, str1);
+
+    // cout << "strcpy for str3 to str1 : " << str3 << endl;
+    cout << "strcpy for str3 to str1 : " << strcpy(str3, str1) << endl;
+
+    for (int i = 0; i < 10; i++)
     {
-        cout << "Please select the desired operation : ";
-        display_operations();
-        cin >> choice;
-
-        switch (choice)
-        {
-        case SumOp:
-            sum();
-            break;
-        case SubstractOp;
-            substract() break;
-            case MultiplyOp;
-            multiply() break;
-            case DivideOp;
-            divide() break;
-            default:
-            cout << "Please select appropiate values. Try again!" << endl;
-            break;
-        }
+        cout << "str3[" << i << "] : " << str3[i] << endl;
     }
-}
 
-void display_operations();
-{
-    cout << "Sum for 1" << endl;
-    cout << "Substract for 2" << endl;
-    cout << "Multiply for 3" << endl;
-    cout << "Divide for 4" << endl;
-    cout << "Exit for 5" << endl;
-}
+    cout << endl;
 
-int sum()
-{
-    cout << "Please enter two integer numbers : ";
-    int a, b;
-    cin >> a;
-    cin >> b;
+    for (int i = 0; i < 15; i++)
+    {
+        cout << "str1[" << i << "] : " << *(str1 + i) << endl;
+    }
 
-    cout << "The sum of two variables : " << (a + b) << endl;
+    //  strcat
 
-    return a + b;
-}
-int substract()
-{
-    cout << "Please enter two integer numbers : ";
-    int a, b;
-    cin >> a;
-    cin >> b;
+    strcat(str1, "");
+    strcat(str1, str2);
 
-    cout << "The substract of two variables : " << (a - b) << endl;
+    cout << "strcat result : " << str1 << endl;
 
-    return a - b;
-}
-int multiply()
-{
-    cout << "Please enter two integer numbers : ";
-    int a, b;
-    cin >> a;
-    cin >> b;
+    //  strlen
 
-    cout << "The multiply of two variables : " << (a * b) << endl;
+    int len = strlen(str1);
 
-    return a * b;
-}
-int divide()
-{
-    cout << "Please enter two integer numbers : ";
-    int a, b;
-    cin >> a;
-    cin >> b;
+    cout << "Length of str : " << len << endl;
 
-    cout << "The divide of two variables : " << (a / b) << endl;
+    //  strcmp
 
-    return a / b;
+    int cmpValue = strcmp(str1, str2);
+
+    if (cmpValue == 0)
+    {
+        cout << "Str1 is equal to str2" << endl;
+    }
+    else
+    {
+        cout << "Str1 is not equal to str2" << endl;
+    }
+
+    return 0;
 }

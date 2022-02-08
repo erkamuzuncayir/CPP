@@ -1062,7 +1062,6 @@ ___
 - SIZE2 -> integer addresss
 - SIZE3 -> integer
 ___
-        // Lesson 27 - Array - 4
         #include <iostream>
         using namespace std;
 
@@ -1100,6 +1099,260 @@ ___
                     }
                 }
             }
+            return 0;
+        }
+___
+
+# Lesson 28 - C++ Array - 5 - Arrays and Pointers
+
+*** Arrays are just more than one pointers to get together for easy-usage. ***
+___
+
+        #include <iostream>
+
+        using namepsace std;
+
+        #define SIZE1 3;
+
+        int main()
+        {
+            int a[SIZE1] = {1, 2, 3};
+            int *a_ptr; // address
+
+            int b;
+
+            a_ptr = a;
+
+            //  display
+
+            for (int i = 0; i < SIZE1; i++)
+            {
+                cout << "a[" << i << "] : " << a[i] << endl;
+            }
+
+            for (int i = 0; i < SIZE1; i++)
+            {
+                cout << "a[" << i << "] : " << a_ptr[i] << endl;
+            }
+
+            cout << "Address of a[] : " << a << endl;
+            cout << "Address of a_ptr[] : " << a_ptr << endl;
+
+            //  different type
+
+            double b = 5.2;
+            double *b_ptr;
+
+            b_ptr = &b;
+
+            cout << "Address of b[] : " << &b << endl;
+            cout << "Address of b_ptr[] : " << b_ptr << endl;
+
+            return 0;
+        }
+___
+
+# Lesson 29 - C++ Array - 6 - Arrays and Pointers 2
+
+**We can't use pointers and address operators like this - >`double b = 8.2; -> int *bptr = &b;`because C++ can't convert when runtime.**
+
+**We can't use multiply and divide operators with pointers besides addition and substraction work with pointers** 
+
+___
+        #include <iostream>
+
+        using namespace std;
+
+        #define SIZE 3
+
+        int main()
+        {
+            int counts[SIZE] = {100, 200, 150}; // 12 bytes
+            int *counts_ptr;
+
+            counts_ptr = counts;
+
+            // counts[i] => *(counts);
+            // * -> asteriks operator => reach value within it's address.
+            // & -> address operator => address of the variable type.
+
+            for (int i = 0; i < SIZE; i++)
+            {
+                cout << "counts[" << i << "] : " << counts[i] << endl;
+                cout << "counts[" << i << "] : " << *(counts + i) << endl;
+                cout << "counts_ptr[" << i << "] : " << *(counts_ptr + i) << endl;
+                cout << "address of counts: " << i << "] : " << &counts[i] << endl;
+                cout << "address of counts: " << i << "] : " << (counts + i) << endl;
+                cout << "address of counts_ptr: " << i << "] : " << (counts_ptr + i) << endl;
+            }
+
+            int a = 5;
+            double b = 8.2;
+
+            int *aptr = &a;
+            double *bptr = &b;
+
+            cout << "aptr : " << aptr << endl;
+            cout << "aptr - 1 : " << aptr - 1 << endl;
+
+            cout << "aptr : " << aptr << endl;
+            cout << "bptr : + 1 " << bptr + 1 << endl;
+
+            return 0;
+        }
+___
+
+# Lesson 30 - C++ Array - 7 - Arrays, Pointers and Functions
+
+___
+        #include <iostream>
+
+        using namespace std;
+
+        #define SIZE 3
+
+        //              function declaration types
+
+        void initializeArray(int *a, int size); //  ADDRESS, initial address
+        void displayArray(int *a, int size);    //  ADDRESS, initial address
+        double meanArray(int *a, int size);     //  ADDRESS, initial address
+
+        // void initializeArray(int a[SIZE], int size); //  ADDRESS, the whole address
+        // void displayArray(int a[SIZE], int size);
+
+        // void initializeArray(int a[], int size); //  ADDRESS, initial address
+        // void displayArray(int a[], int size);
+
+        int main()
+        {
+            int a[SIZE];
+
+            initializeArray(a, SIZE);
+            displayArray(a, SIZE);
+
+            double meanValue = meanArray(a, SIZE);
+
+            cout << "Mean value of an array : " << meanValue << endl;
+            cout << "Mean value of an array : " << meanArray(a, SIZE) << endl;
+
+            return 0;
+        }
+
+        void initializeArray(int *a, int size)
+        {
+            for (int i = 0; i < size; i++)
+            {
+                *(a + i) = i * 10 + 7 - i ^ 2; // *(a+i) = i
+            }
+        }
+
+        void displayArray(int *a, int size)
+        {
+            for (int i = 0; i < size; i++)
+            {
+                cout << "a[" << i << "] : " << a[i] << endl; // *(a+i)
+            }
+        }
+
+        double meanArray(int *a, int size)
+        {
+            double sum = 0;
+            for (int i = 0; i < size; i++)
+            {
+                sum = sum + *(a + i);
+            }
+
+            double meanValue = sum / (size);
+
+            return meanValue;
+        }
+___
+
+# Lesson 31/32 - C++ Creating Header File
+
+We can create header file for using our function to another files. 
+**You shouldn't forget when creating header file;**
+
+1. *#ifndef* for just one time implementation.
+2. *".hpp and .cpp"* file formats for creating header file.
+3. Modifying and adding header file's .cpp file to task.json's "args" tabs.  
+
+# Lesson 33/34/35 - C++ String
+
+**Char is a 1 byte using alphabet word in C++**
+
+***We are creating an array with this chars and calling it, `string`.***
+
+`char[] = "Hello" -> String`
+
+**If we want create a proper string we have to use `\0` as a last character of array. Because C++ doesn't know char arrays' last address. We are shows last address in this way to C++.**
+
+**Using `<cstring>` we can reach some important functions like;**
+1. strcpy -> copy str1 to str2
+2. strcat -> concenetaes str2 onto str1
+3. strlen -> length of str
+4. strcmp -> compare both str 1 and str2
+5. strchr -> searching specific characters
+
+___
+        #include <iostream>
+        #include <cstring>
+
+        using namespace std;
+
+        int main()
+        {
+            char str1[10] = "Ali"; // const char
+            char str2[10] = "Veli";
+            char str3[10];
+
+            char *str4;
+
+            //  strcpy
+
+            strcpy(str3, str1);
+
+            // cout << "strcpy for str3 to str1 : " << str3 << endl;
+            cout << "strcpy for str3 to str1 : " << strcpy(str3, str1) << endl;
+
+            for (int i = 0; i < 10; i++)
+            {
+                cout << "str3[" << i << "] : " << str3[i] << endl;
+            }
+
+            cout << endl;
+
+            for (int i = 0; i < 15; i++)
+            {
+                cout << "str1[" << i << "] : " << *(str1 + i) << endl;
+            }
+
+            //  strcat
+
+            strcat(str1, "");
+            strcat(str1, str2);
+
+            cout << "strcat result : " << str1 << endl;
+
+            //  strlen
+
+            int len = strlen(str1);
+
+            cout << "Length of str : " << len << endl;
+
+            //  strcmp
+
+            int cmpValue = strcmp(str1, str2);
+
+            if (cmpValue == 0)
+            {
+                cout << "Str1 is equal to str2" << endl;
+            }
+            else
+            {
+                cout << "Str1 is not equal to str2" << endl;
+            }
+
             return 0;
         }
 ___
